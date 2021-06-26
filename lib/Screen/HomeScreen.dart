@@ -30,34 +30,13 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     double width = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.black38,
-          elevation: 0,
-          title: Container(
-            child: TextFormField(
-              decoration: InputDecoration(
-                  border: InputBorder.none, hintText: 'Search Email'),
-            ),
-          ),
-          actions: [
-            Container(
-              padding: EdgeInsets.only(right: 10),
-              child: CircleAvatar(
-                backgroundImage: AssetImage(
-                  'images/logo.png',
-                ),
-              ),
-            )
-          ],
-        ),
-        drawer: Drawer(
-          child: Column(
-            children: [Text('Welcome')],
-          ),
-        ),
         body: TabBarView(
+          physics: NeverScrollableScrollPhysics(),
           controller: _controller,
-          children: [MailTab(), MeetTab()],
+          children: [
+            MailTab(),
+            MeetTab(),
+          ],
         ),
         bottomNavigationBar: Container(
           height: 50,
