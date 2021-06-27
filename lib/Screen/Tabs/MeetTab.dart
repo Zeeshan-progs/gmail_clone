@@ -2,23 +2,30 @@ import 'package:flutter/material.dart';
 
 import '../joinPage.dart';
 
+// lets start building maat app ui in our way
 class MeetTab extends StatefulWidget {
+  const MeetTab({Key key}) : super(key: key);
+
   @override
   _MeetTabState createState() => _MeetTabState();
 }
 
 class _MeetTabState extends State<MeetTab> {
-  int page = 0;
+  PageController _controller;
 
-  PageController _controller = PageController(
-    initialPage: 0,
-  );
+  int page = 0;
+  @override
+  void initState() {
+    super.initState();
+    _controller = PageController(
+      initialPage: 0,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    // hey guys welcome to gmail clone episode two
-    double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -26,116 +33,103 @@ class _MeetTabState extends State<MeetTab> {
         centerTitle: true,
         title: Text(
           'Meet',
-          style: TextStyle(
-            fontSize: 15.0,
-            color: Colors.black,
-          ),
+          style: textStyle,
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 18.0,
-            ),
-            child: CircleAvatar(
-              backgroundImage: AssetImage('images/photo-1.jpg'),
-            ),
-          )
-        ],
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          width: width,
-          height: height / 1.3,
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      showSheet(context);
-                    },
-                    child: Text(
-                      'Create New Meeting',
-                      style: TextStyle(
-                        fontSize: 14.0,
-                        color: Colors.white,
-                      ),
+      body: Container(
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                RaisedButton(
+                  onPressed: () {
+                    // lets open sheet on button
+
+                    showSheet(context);
+                  },
+                  child: Text(
+                    'Create Meeting',
+                    style: textStyle.copyWith(
+                      color: Colors.white,
                     ),
                   ),
-                  OutlinedButton(
-                      style: ButtonStyle(
-                        side: MaterialStateProperty.all(
-                          BorderSide(
-                            color: Theme.of(context).accentColor,
-                          ),
-                        ),
+                  color: Colors.deepPurple[900],
+                ),
+                OutlinedButton(
+                  onPressed: () {
+                    // lets create join page
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => JoinPage(),
                       ),
-                      onPressed: () {
-                        // now lets add new page for meeting join
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (_) => JoinPage()),
-                        );
-                      },
-                      child: Text(
-                        'join meeting with code',
-                        style: TextStyle(
-                          fontSize: 15.0,
-                          color: Colors.black,
-                        ),
-                      )),
+                    );
+                  },
+                  child: Text(
+                    'Join now with code',
+                    style: textStyle,
+                  ),
+                ),
+              ],
+            ),
+            Expanded(
+              flex: 1,
+              child: PageView(
+                onPageChanged: (p) {
+                  setState(() {
+                    page = p;
+                  });
+                },
+                controller: _controller,
+                children: [
+                  buildContainer(
+                    height,
+                    width,
+                    image: 'images/photo-1.jpg',
+                  ),
+                  buildContainer(
+                    height,
+                    width,
+                    image: 'images/meet1.jpg',
+                  ),
                 ],
               ),
-              SizedBox(height: 20),
-              // page silde content
-              Expanded(
-                flex: 1,
-                child: PageView(
-                  onPageChanged: (p) {
-                    setState(() {
-                      page = p;
-                    });
-                  },
-                  controller: _controller,
-                  children: [
-                    buildSliderContent(width, height, 'images/photo-1.jpg'),
-                    buildSliderContent(width, height, 'images/meet1.jpg'),
-                  ],
-                ),
-              ),
+            ),
+            SizedBox(height: 20),
+            // lets add indicator
 
-              // page indicator
+            Container(
+              child: Row(
+                // align in cente
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(
+                  2,
+                  (index) => Container(
+                    // which type of indicator you want you can add here
 
-              SizedBox(height: 20),
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(
-                    2,
-                    (index) => Container(
-                      margin: EdgeInsets.symmetric(horizontal: 5),
-                      height: 10,
-                      width: 10,
-                      decoration: BoxDecoration(
-                        color:
-                            index == (page) ? Colors.deepPurple : Colors.grey,
-                        shape: BoxShape.circle,
-                      ),
+                    margin: EdgeInsets.symmetric(horizontal: 10),
+                    height: 10,
+                    width: 10,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      // color changing indicator
+                      color:
+                          index == page ? Colors.deepPurple[900] : Colors.grey,
                     ),
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  Container buildSliderContent(double width, double height, String image) {
+  Container buildContainer(double height, double width,
+      {@required String image}) {
     return Container(
-      width: width,
       child: Column(
         children: [
           Image.asset(
@@ -144,30 +138,18 @@ class _MeetTabState extends State<MeetTab> {
             width: width,
             fit: BoxFit.cover,
           ),
+          SizedBox(height: 20),
           Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: 15,
-              vertical: 10,
-            ),
             child: Text(
-              'Your Dummy Title Text That You want to show in your app ',
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.black,
-              ),
+              'Dummy title text taht you want to show !',
+              style: textStyle,
             ),
           ),
+          SizedBox(height: 20),
           Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: 15,
-              vertical: 10,
-            ),
             child: Text(
-              'Your Dummy description Text That You want to show in your app ',
-              style: TextStyle(
-                fontSize: 13,
-                color: Colors.grey,
-              ),
+              'Dummy title text taht you want to show !',
+              style: greyText,
             ),
           ),
         ],
@@ -175,59 +157,70 @@ class _MeetTabState extends State<MeetTab> {
     );
   }
 
-// show bottom model of options
+  // create single style for all ui
+
+  TextStyle textStyle = TextStyle(
+    fontSize: 18.0,
+    color: Colors.black,
+  );
+  TextStyle greyText = TextStyle(
+    fontSize: 15.0,
+    color: Colors.grey,
+  );
+  // create bottom sheet  of options
+
   showSheet(BuildContext context) {
     showModalBottomSheet(
       backgroundColor: Colors.black,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(15),
+          topRight: Radius.circular(15),
+        ),
       ),
       context: context,
       builder: (_) => Container(
-        padding: EdgeInsets.symmetric(
-          vertical: 20,
-          horizontal: 10,
-        ),
+        padding: EdgeInsets.all(15),
         height: 200,
+        width: double.infinity,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            bottomContent(
-                icon: Icons.link, text: 'Create link to instent join'),
-            bottomContent(icon: Icons.videocam, text: 'Start Instent Meeting'),
-            bottomContent(
-                icon: Icons.calendar_today, text: 'Scheduled meeting '),
-
-            // to add some function just wrap with widget
-            GestureDetector(
-                onTap: () {
-                  Navigator.pop(context); // to close bottom sheet
-                },
-                child: bottomContent(icon: Icons.close, text: 'Close')),
+            container(
+              icon: Icons.calendar_today,
+              text: 'Schedule your meeting',
+            ),
+            container(
+              icon: Icons.videocam,
+              text: 'create instent meeing',
+            ),
+            container(
+              icon: Icons.share,
+              text: 'share link',
+            ),
+            container(
+              icon: Icons.close,
+              text: 'Close',
+            ),
           ],
         ),
       ),
     );
   }
 
-  Container bottomContent({IconData icon, String text}) {
+  Container container({IconData icon, String text}) {
     return Container(
-      width: double.infinity,
-      padding: EdgeInsets.only(left: 20),
       child: Row(
         children: [
           Icon(
             icon,
+            size: 22,
             color: Colors.grey,
-            size: 28,
           ),
-          SizedBox(width: 20),
+          SizedBox(width: 50),
           Text(
             text,
-            style: TextStyle(
-              color: Colors.grey,
-              fontSize: 15.0,
-            ),
+            style: greyText,
           ),
         ],
       ),
