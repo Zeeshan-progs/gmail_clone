@@ -1,16 +1,20 @@
 # gmail_clone
 
-A new Flutter project.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+# Gmail Clone Episode 1
 
-A few resources to get you started if this is your first Flutter project:
+[**Watch Now** ](https://www.youtube.com/watch?v=h4o6mHeGoWw)
+![maxresdefault (1)](https://user-images.githubusercontent.com/67018643/124356730-47264580-dc35-11eb-99d0-10fc1ff7d8dc.jpg)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+# Gmail Clone Episode 2
+
+[**Watch Now**](https://www.youtube.com/watch?v=nn20Z3gLyYU)
+
+
+![maxresdefault](https://user-images.githubusercontent.com/67018643/124356731-48577280-dc35-11eb-8ed4-e065cb32a37f.jpg)
+
+
+
